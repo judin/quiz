@@ -796,6 +796,8 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding-top: calc(10px + var(--safe-top));
+    padding-bottom: calc(10px + var(--safe-bottom));
 }
 
 .results-content {
@@ -805,25 +807,24 @@ body {
 }
 
 .results-header {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .results-emoji {
-    font-size: 60px;
-    margin-bottom: 15px;
-    animation: bounce 1s ease;
+    font-size: 50px;
+    margin-bottom: 8px;
 }
 
 .results-header h1 {
-    font-size: 32px;
+    font-size: 26px;
     font-weight: 800;
 }
 
 .score-circle {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 30px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -837,56 +838,61 @@ body {
 }
 
 .final-score {
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 800;
     line-height: 1;
 }
 
 .score-max {
-    font-size: 16px;
+    font-size: 13px;
     opacity: 0.7;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 25px;
+    gap: 8px;
+    margin-bottom: 15px;
 }
 
 .stat-card {
     background: rgba(255, 255, 255, 0.1);
-    padding: 16px;
-    border-radius: 16px;
+    padding: 12px 8px;
+    border-radius: 12px;
     backdrop-filter: blur(10px);
 }
 
 .stat-value {
     display: block;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 800;
 }
 
 .stat-label {
-    font-size: 12px;
+    font-size: 11px;
     opacity: 0.8;
 }
 
 .new-high-score {
     background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
     color: var(--dark);
-    padding: 12px 24px;
-    border-radius: 30px;
+    padding: 8px 16px;
+    border-radius: 20px;
     font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 25px;
+    font-size: 14px;
+    margin-bottom: 15px;
     animation: pulse 1s infinite;
 }
 
 .results-actions {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+}
+
+.results-actions .btn {
+    padding: 12px 24px;
+    font-size: 15px;
 }
 
 /* Confetti */
