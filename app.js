@@ -232,6 +232,28 @@ class QuizApp {
         this.questions = [];
         this.correctEmojis = ['🎉', '✨', '🔥', '💯', '⭐', '🌟', '👏', '🙌', '💪', '🎯', '👑', '🚀'];
         this.wrongEmojis = ['😅', '💔', '😬', '🙈', '😢', '❌', '👎', '😵'];
+        this.quickTopics = [
+            { emoji: '🧠', name: 'General Knowledge' },
+            { emoji: '🔬', name: 'Science & Nature' },
+            { emoji: '📜', name: 'History' },
+            { emoji: '🎬', name: 'Movies & TV' },
+            { emoji: '🎵', name: 'Music' },
+            { emoji: '⚽', name: 'Sports' },
+            { emoji: '🌍', name: 'Geography' },
+            { emoji: '📚', name: 'Literature' },
+            { emoji: '🎮', name: 'Video Games' },
+            { emoji: '🍕', name: 'Food & Drink' },
+            { emoji: '🎨', name: 'Art' },
+            { emoji: '💻', name: 'Technology' },
+            { emoji: '🚀', name: 'Space' },
+            { emoji: '🐾', name: 'Animals' },
+            { emoji: '🎭', name: 'Theatre' },
+            { emoji: '📺', name: 'TV Shows' },
+            { emoji: '🏛️', name: 'Ancient History' },
+            { emoji: '🎸', name: 'Rock Music' },
+            { emoji: '🦸', name: 'Superheroes' },
+            { emoji: '🧙', name: 'Fantasy & Mythology' }
+        ];
         this.currentQuestionIndex = 0;
         this.score = 0;
         this.streak = 0;
@@ -401,6 +423,31 @@ class QuizApp {
         });
         document.getElementById(screenId).classList.add('active');
         this.currentScreen = screenId;
+
+        // Refresh quick topics when showing subject screen
+        if (screenId === 'subject-screen') {
+            this.refreshQuickTopics();
+        }
+    }
+
+    refreshQuickTopics() {
+        // Shuffle and pick 4 random topics (always include General Knowledge first)
+        const generalKnowledge = this.quickTopics[0];
+        const otherTopics = this.quickTopics.slice(1).sort(() => Math.random() - 0.5).slice(0, 3);
+        const selectedTopics = [generalKnowledge, ...otherTopics];
+
+        const container = document.querySelector('.quick-topics-grid');
+        container.innerHTML = selectedTopics.map(topic =>
+            `<button class="quick-topic-btn" data-topic="${topic.name}">${topic.emoji} ${topic.name}</button>`
+        ).join('');
+
+        // Re-bind click events
+        container.querySelectorAll('.quick-topic-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.sound.play('click');
+                this.startQuiz(btn.dataset.topic);
+            });
+        });
     }
 
     startDirectQuiz() {
