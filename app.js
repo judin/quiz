@@ -155,17 +155,20 @@ Example format:
 
         const prompt = `Create exactly ${count} ${difficultyDesc[difficulty]} about "${topic}".
 
-Return a JSON array with exactly ${count} question objects. Each object must have:
-- "question": the question text (clear and concise)
-- "options": array of exactly 3 possible answers
-- "correct": the correct answer (must match one of the options exactly)
+CRITICAL REQUIREMENTS:
+1. All answers MUST be 100% factually accurate and verifiable
+2. Use British English spelling throughout (e.g., colour, favourite, organisation, centre)
+3. The "correct" field MUST exactly match one of the strings in "options" - character for character
+4. Double-check every answer is definitively correct before including it
+5. Avoid ambiguous questions where multiple answers could be considered correct
 
-Make sure:
-1. Questions are factually accurate
-2. Each question has exactly 3 options
-3. Only one option is correct
-4. Options are plausible but distinguishable
-5. Questions cover different aspects of the topic
+Return a JSON array with exactly ${count} question objects. Each object must have:
+- "question": the question text (clear and unambiguous)
+- "options": array of exactly 3 possible answers (all plausible but only one correct)
+- "correct": the correct answer (MUST be an exact copy of one option)
+
+Example format:
+[{"question": "What is the capital of France?", "options": ["London", "Paris", "Berlin"], "correct": "Paris"}]
 
 Only return the JSON array, no other text.`;
 
