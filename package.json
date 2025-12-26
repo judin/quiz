@@ -1,0 +1,12 @@
+{
+  "name": "quizmaster-ai",
+  "version": "1.0.0",
+  "description": "AI-Powered Interactive Quiz PWA",
+  "scripts": {
+    "generate-icons": "node scripts/generate-icons.js",
+    "build": "npm run generate-icons"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.2"
+  }
+}

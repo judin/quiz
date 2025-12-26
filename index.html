@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="QuizMaster">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="AI-Powered Interactive Quiz Game">
+
+    <title>QuizMaster AI</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- API Key Screen -->
+        <div id="apikey-screen" class="screen active">
+            <div class="apikey-content">
+                <div class="logo-container">
+                    <div class="logo-icon">🔑</div>
+                    <h1>Welcome!</h1>
+                    <p class="tagline">Enter your OpenAI API key to get started</p>
+                </div>
+                <div class="apikey-input-section">
+                    <input type="password" id="apikey-input" placeholder="sk-...">
+                    <p class="apikey-hint">Your key is stored locally and never sent to our servers</p>
+                    <button id="save-apikey-btn" class="btn btn-primary">
+                        <span>Continue</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+                <a href="https://platform.openai.com/api-keys" target="_blank" class="apikey-link">Get an API key from OpenAI →</a>
+            </div>
+        </div>
+
+        <!-- Splash Screen -->
+        <div id="splash-screen" class="screen">
+            <div class="splash-content">
+                <div class="logo-container">
+                    <div class="logo-icon">🧠</div>
+                    <h1>QuizMaster</h1>
+                    <p class="tagline">AI-Powered Trivia</p>
+                </div>
+                <button id="start-btn" class="btn btn-primary pulse">
+                    <span>Start Quiz</span>
+                    <span class="btn-icon">→</span>
+                </button>
+                <div class="high-score-display">
+                    <span>🏆 High Score: <span id="high-score">0</span></span>
+                </div>
+                <button id="settings-btn" class="btn-settings" title="Settings">⚙️</button>
+            </div>
+            <div class="floating-shapes">
+                <div class="shape shape-1">?</div>
+                <div class="shape shape-2">!</div>
+                <div class="shape shape-3">✓</div>
+                <div class="shape shape-4">★</div>
+            </div>
+        </div>
+
+        <!-- Subject Selection Screen -->
+        <div id="subject-screen" class="screen">
+            <div class="screen-header">
+                <button class="btn-back" id="back-to-splash">←</button>
+                <h2>Choose Your Challenge</h2>
+            </div>
+            <div class="subject-content">
+                <div class="subject-input-section">
+                    <label for="subject-input">What would you like to be quizzed on?</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="subject-input" placeholder="e.g., Space, History, Music...">
+                        <button id="generate-topics-btn" class="btn-generate">
+                            <span class="sparkle">✨</span> Generate
+                        </button>
+                    </div>
+                </div>
+
+                <div class="topics-section">
+                    <div class="topics-header">
+                        <h3>Pick a Topic</h3>
+                        <button id="refresh-topics-btn" class="btn-refresh" title="Get new topics">
+                            🔄
+                        </button>
+                    </div>
+                    <div id="topics-container" class="topics-container">
+                        <div class="topic-placeholder">
+                            <p>Enter a subject above to get AI-generated topics!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="difficulty-section">
+                    <h3>Difficulty</h3>
+                    <div class="difficulty-options">
+                        <button class="difficulty-btn" data-difficulty="easy">😊 Easy</button>
+                        <button class="difficulty-btn active" data-difficulty="medium">🤔 Medium</button>
+                        <button class="difficulty-btn" data-difficulty="hard">🔥 Hard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Generating your quiz...</p>
+                <p class="loading-subtext" id="loading-topic"></p>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <div class="progress-section">
+                    <span class="question-counter">Question <span id="current-question">1</span>/10</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                <div class="score-section">
+                    <span class="score-label">Score</span>
+                    <span class="score-value" id="current-score">0</span>
+                </div>
+            </div>
+
+            <div class="timer-container">
+                <svg class="timer-svg" viewBox="0 0 100 100">
+                    <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                    <circle class="timer-progress" id="timer-progress" cx="50" cy="50" r="45"></circle>
+                </svg>
+                <div class="timer-text" id="timer-text">15</div>
+            </div>
+
+            <div class="question-container">
+                <h2 class="question-text" id="question-text"></h2>
+            </div>
+
+            <div class="options-container" id="options-container">
+                <!-- Options will be dynamically inserted -->
+            </div>
+
+            <div class="streak-indicator" id="streak-indicator">
+                🔥 <span id="streak-count">0</span> Streak!
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="results-content">
+                <div class="results-header">
+                    <div class="results-emoji" id="results-emoji">🎉</div>
+                    <h1 id="results-title">Great Job!</h1>
+                </div>
+
+                <div class="score-circle">
+                    <div class="score-circle-inner">
+                        <span class="final-score" id="final-score">0</span>
+                        <span class="score-max">/1000</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value" id="correct-count">0</span>
+                        <span class="stat-label">Correct</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="accuracy-percent">0%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="best-streak">0</span>
+                        <span class="stat-label">Best Streak</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="avg-time">0s</span>
+                        <span class="stat-label">Avg Time</span>
+                    </div>
+                </div>
+
+                <div class="new-high-score" id="new-high-score" style="display: none;">
+                    🏆 New High Score! 🏆
+                </div>
+
+                <div class="results-actions">
+                    <button id="play-again-btn" class="btn btn-primary">
+                        <span>Play Again</span>
+                        <span class="btn-icon">🔄</span>
+                    </button>
+                    <button id="new-topic-btn" class="btn btn-secondary">
+                        <span>New Topic</span>
+                        <span class="btn-icon">📚</span>
+                    </button>
+                    <button id="share-btn" class="btn btn-outline">
+                        <span>Share Score</span>
+                        <span class="btn-icon">📤</span>
+                    </button>
+                </div>
+            </div>
+            <div class="confetti-container" id="confetti-container"></div>
+        </div>
+    </div>
+
+    <!-- Audio Context Unlock Button (for iOS) -->
+    <div id="audio-unlock" class="audio-unlock" style="display: none;">
+        <button id="unlock-audio-btn">🔊 Tap to enable sounds</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
