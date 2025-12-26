@@ -73,35 +73,32 @@
             </div>
             <div class="subject-content">
                 <div class="subject-input-section">
-                    <label for="subject-input">What would you like to be quizzed on?</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="subject-input" placeholder="e.g., Space, History, Music...">
-                        <button id="generate-topics-btn" class="btn-generate">
-                            <span class="sparkle">✨</span> Generate
+                    <label for="subject-input">What do you want to be quizzed on?</label>
+                    <input type="text" id="subject-input" placeholder="e.g., Back to the Future, WW2, Taylor Swift...">
+                    <div class="input-actions">
+                        <button id="start-direct-btn" class="btn btn-primary">
+                            <span>Start Quiz</span>
+                        </button>
+                        <button id="generate-topics-btn" class="btn-secondary-small">
+                            Or get suggestions
                         </button>
                     </div>
                 </div>
 
-                <div class="topics-section">
+                <div id="topics-section" class="topics-section" style="display: none;">
                     <div class="topics-header">
-                        <h3>Pick a Topic</h3>
-                        <button id="refresh-topics-btn" class="btn-refresh" title="Get new topics">
-                            🔄
-                        </button>
+                        <h3>Or pick a topic</h3>
+                        <button id="refresh-topics-btn" class="btn-refresh" title="Get new topics">🔄</button>
                     </div>
-                    <div id="topics-container" class="topics-container">
-                        <div class="topic-placeholder">
-                            <p>Enter a subject above to get AI-generated topics!</p>
-                        </div>
-                    </div>
+                    <div id="topics-container" class="topics-container"></div>
                 </div>
 
                 <div class="difficulty-section">
                     <h3>Difficulty</h3>
                     <div class="difficulty-options">
-                        <button class="difficulty-btn" data-difficulty="easy">😊 Easy</button>
-                        <button class="difficulty-btn active" data-difficulty="medium">🤔 Medium</button>
-                        <button class="difficulty-btn" data-difficulty="hard">🔥 Hard</button>
+                        <button class="difficulty-btn" data-difficulty="easy">Easy</button>
+                        <button class="difficulty-btn active" data-difficulty="medium">Medium</button>
+                        <button class="difficulty-btn" data-difficulty="hard">Hard</button>
                     </div>
                 </div>
             </div>

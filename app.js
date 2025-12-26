@@ -305,13 +305,17 @@ class QuizApp {
             this.showScreen('splash-screen');
         });
 
+        document.getElementById('start-direct-btn').addEventListener('click', () => {
+            this.startDirectQuiz();
+        });
+
         document.getElementById('generate-topics-btn').addEventListener('click', () => {
             this.generateTopics();
         });
 
         document.getElementById('subject-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                this.generateTopics();
+                this.startDirectQuiz();
             }
         });
 
@@ -378,6 +382,16 @@ class QuizApp {
         this.currentScreen = screenId;
     }
 
+    startDirectQuiz() {
+        const input = document.getElementById('subject-input').value.trim();
+        if (!input) {
+            alert('Please enter a topic');
+            return;
+        }
+        this.sound.play('click');
+        this.startQuiz(input);
+    }
+
     async generateTopics() {
         const input = document.getElementById('subject-input').value.trim();
         if (!input) {
@@ -388,13 +402,16 @@ class QuizApp {
         this.lastSubject = input;
         this.sound.play('click');
 
+        // Show topics section
+        document.getElementById('topics-section').style.display = 'block';
+
         const refreshBtn = document.getElementById('refresh-topics-btn');
         const generateBtn = document.getElementById('generate-topics-btn');
         refreshBtn.classList.add('spinning');
         generateBtn.disabled = true;
 
         const container = document.getElementById('topics-container');
-        container.innerHTML = '<div class="topic-placeholder"><p>Generating topics with AI...</p></div>';
+        container.innerHTML = '<div class="topic-placeholder"><p>Generating...</p></div>';
 
         try {
             const topics = await this.openai.generateTopics(input);

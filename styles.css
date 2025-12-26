@@ -231,90 +231,93 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 }
 
 .subject-input-section label {
     display: block;
     font-size: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     opacity: 0.8;
 }
 
-.input-wrapper {
-    display: flex;
-    gap: 10px;
-}
-
-.input-wrapper input {
-    flex: 1;
-    padding: 16px 20px;
+.subject-input-section input {
+    width: 100%;
+    padding: 14px 18px;
     font-size: 16px;
     border: 2px solid var(--card-border);
-    border-radius: 16px;
+    border-radius: 14px;
     background: var(--card-bg);
     color: var(--light);
     font-family: inherit;
     backdrop-filter: blur(10px);
+    margin-bottom: 12px;
 }
 
-.input-wrapper input::placeholder {
+.subject-input-section input::placeholder {
     color: var(--gray);
 }
 
-.input-wrapper input:focus {
+.subject-input-section input:focus {
     outline: none;
     border-color: var(--primary);
 }
 
-.btn-generate {
-    padding: 16px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    background: var(--gradient);
+.input-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-actions .btn {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 16px;
+}
+
+.btn-secondary-small {
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
     color: var(--light);
-    border: none;
-    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
     cursor: pointer;
-    white-space: nowrap;
     font-family: inherit;
-    transition: transform 0.2s;
+    transition: all 0.2s;
+    white-space: nowrap;
 }
 
-.btn-generate:active {
-    transform: scale(0.95);
-}
-
-.sparkle {
-    display: inline-block;
-    animation: sparkle 1.5s infinite;
-}
-
-@keyframes sparkle {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+.btn-secondary-small:active {
+    background: var(--card-bg);
 }
 
 /* Topics Section */
+.topics-section {
+    margin-top: 5px;
+}
+
 .topics-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .topics-header h3 {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
+    opacity: 0.8;
 }
 
 .btn-refresh {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: none;
     background: var(--card-bg);
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
     transition: transform 0.3s;
 }
@@ -334,27 +337,27 @@ body {
 .topics-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .topic-placeholder {
     text-align: center;
-    padding: 40px 20px;
+    padding: 20px;
     background: var(--card-bg);
-    border-radius: 16px;
+    border-radius: 12px;
     border: 2px dashed var(--card-border);
 }
 
 .topic-placeholder p {
     opacity: 0.6;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .topic-card {
-    padding: 20px;
+    padding: 12px 16px;
     background: var(--card-bg);
     border: 2px solid var(--card-border);
-    border-radius: 16px;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
@@ -370,36 +373,37 @@ body {
 }
 
 .topic-card h4 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
 }
 
 .topic-card p {
-    font-size: 13px;
+    font-size: 12px;
     opacity: 0.7;
 }
 
 /* Difficulty Section */
 .difficulty-section h3 {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    opacity: 0.8;
 }
 
 .difficulty-options {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .difficulty-btn {
     flex: 1;
-    padding: 14px;
-    font-size: 14px;
+    padding: 10px 12px;
+    font-size: 13px;
     font-weight: 600;
     background: var(--card-bg);
     border: 2px solid var(--card-border);
-    border-radius: 12px;
+    border-radius: 10px;
     color: var(--light);
     cursor: pointer;
     transition: all 0.2s;
