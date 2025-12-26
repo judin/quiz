@@ -234,6 +234,11 @@ body {
     gap: 20px;
 }
 
+.subject-input-section {
+    display: flex;
+    flex-direction: column;
+}
+
 .subject-input-section label {
     display: block;
     font-size: 14px;
@@ -241,9 +246,10 @@ body {
     opacity: 0.8;
 }
 
-.subject-input-section input {
+.subject-input-section > input[type="text"] {
     width: 100%;
-    padding: 14px 18px;
+    min-height: 54px;
+    padding: 16px 18px;
     font-size: 16px;
     border: 2px solid var(--card-border);
     border-radius: 14px;
@@ -251,7 +257,11 @@ body {
     color: var(--light);
     font-family: inherit;
     backdrop-filter: blur(10px);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    display: block;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .subject-input-section input::placeholder {
