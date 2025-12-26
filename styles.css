@@ -425,6 +425,71 @@ body {
     border-color: transparent;
 }
 
+/* Questions Section */
+.questions-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.questions-options {
+    display: flex;
+    gap: 8px;
+}
+
+.questions-btn {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 10px;
+    color: var(--light);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.questions-btn.active {
+    background: var(--gradient);
+    border-color: transparent;
+}
+
+/* Emoji Feedback */
+.emoji-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.emoji-feedback.show {
+    opacity: 1;
+    animation: emojiPop 0.6s ease-out forwards;
+}
+
+@keyframes emojiPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -70%) scale(1);
+        opacity: 0;
+    }
+}
+
 /* Loading Screen */
 #loading-screen {
     background: var(--gradient-dark);

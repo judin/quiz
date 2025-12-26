@@ -101,6 +101,15 @@
                         <button class="difficulty-btn" data-difficulty="hard">Hard</button>
                     </div>
                 </div>
+
+                <div class="questions-section">
+                    <h3>Questions</h3>
+                    <div class="questions-options">
+                        <button class="questions-btn active" data-count="10">10</button>
+                        <button class="questions-btn" data-count="15">15</button>
+                        <button class="questions-btn" data-count="20">20</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -117,7 +126,7 @@
         <div id="quiz-screen" class="screen">
             <div class="quiz-header">
                 <div class="progress-section">
-                    <span class="question-counter">Question <span id="current-question">1</span>/10</span>
+                    <span class="question-counter">Question <span id="current-question">1</span>/<span id="total-questions">10</span></span>
                     <div class="progress-bar">
                         <div class="progress-fill" id="progress-fill"></div>
                     </div>
@@ -147,6 +156,8 @@
             <div class="streak-indicator" id="streak-indicator">
                 🔥 <span id="streak-count">0</span> Streak!
             </div>
+
+            <div class="emoji-feedback" id="emoji-feedback"></div>
         </div>
 
         <!-- Results Screen -->
@@ -160,7 +171,7 @@
                 <div class="score-circle">
                     <div class="score-circle-inner">
                         <span class="final-score" id="final-score">0</span>
-                        <span class="score-max">/1000</span>
+                        <span class="score-max">points</span>
                     </div>
                 </div>
 

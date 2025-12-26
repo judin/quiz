@@ -146,16 +146,16 @@ Example format:
         }
     }
 
-    async generateQuestions(topic, difficulty) {
+    async generateQuestions(topic, difficulty, count = 10) {
         const difficultyDesc = {
             easy: 'straightforward questions suitable for beginners',
             medium: 'moderately challenging questions for general knowledge',
             hard: 'difficult questions that test deep knowledge'
         };
 
-        const prompt = `Create exactly 10 ${difficultyDesc[difficulty]} about "${topic}".
+        const prompt = `Create exactly ${count} ${difficultyDesc[difficulty]} about "${topic}".
 
-Return a JSON array with exactly 10 question objects. Each object must have:
+Return a JSON array with exactly ${count} question objects. Each object must have:
 - "question": the question text (clear and concise)
 - "options": array of exactly 3 possible answers
 - "correct": the correct answer (must match one of the options exactly)
@@ -228,7 +228,10 @@ class QuizApp {
         this.currentScreen = 'apikey-screen';
         this.selectedTopic = null;
         this.selectedDifficulty = 'medium';
+        this.questionCount = 10;
         this.questions = [];
+        this.correctEmojis = ['🎉', '✨', '🔥', '💯', '⭐', '🌟', '👏', '🙌', '💪', '🎯', '👑', '🚀'];
+        this.wrongEmojis = ['😅', '💔', '😬', '🙈', '😢', '❌', '👎', '😵'];
         this.currentQuestionIndex = 0;
         this.score = 0;
         this.streak = 0;
@@ -330,6 +333,16 @@ class QuizApp {
                 document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 this.selectedDifficulty = btn.dataset.difficulty;
+            });
+        });
+
+        // Question count buttons
+        document.querySelectorAll('.questions-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.sound.play('click');
+                document.querySelectorAll('.questions-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.questionCount = parseInt(btn.dataset.count);
             });
         });
 
@@ -465,7 +478,7 @@ class QuizApp {
         this.questionTimes = [];
 
         try {
-            this.questions = await this.openai.generateQuestions(topic, this.selectedDifficulty);
+            this.questions = await this.openai.generateQuestions(topic, this.selectedDifficulty, this.questionCount);
             this.showScreen('quiz-screen');
             this.displayQuestion();
         } catch (error) {
@@ -479,7 +492,8 @@ class QuizApp {
         const question = this.questions[this.currentQuestionIndex];
 
         document.getElementById('current-question').textContent = this.currentQuestionIndex + 1;
-        document.getElementById('progress-fill').style.width = `${((this.currentQuestionIndex + 1) / 10) * 100}%`;
+        document.getElementById('total-questions').textContent = this.questionCount;
+        document.getElementById('progress-fill').style.width = `${((this.currentQuestionIndex + 1) / this.questionCount) * 100}%`;
         document.getElementById('current-score').textContent = this.score;
         document.getElementById('question-text').textContent = question.question;
 
@@ -563,6 +577,7 @@ class QuizApp {
             selectedBtn.classList.add('correct');
             this.sound.play('correct');
             this.sound.vibrate(50);
+            this.showEmojiFeedback(true);
 
             // Calculate points (more points for faster answers)
             const timeBonus = Math.floor(this.timeLeft * 5);
@@ -580,6 +595,7 @@ class QuizApp {
             selectedBtn.classList.add('wrong');
             this.sound.play('wrong');
             this.sound.vibrate([100, 50, 100]);
+            this.showEmojiFeedback(false);
             this.streak = 0;
 
             // Show correct answer
@@ -630,6 +646,17 @@ class QuizApp {
         }, 200);
     }
 
+    showEmojiFeedback(isCorrect) {
+        const emojis = isCorrect ? this.correctEmojis : this.wrongEmojis;
+        const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+        const feedbackEl = document.getElementById('emoji-feedback');
+
+        feedbackEl.textContent = emoji;
+        feedbackEl.classList.remove('show');
+        void feedbackEl.offsetWidth; // Force reflow
+        feedbackEl.classList.add('show');
+    }
+
     updateStreakIndicator() {
         const indicator = document.getElementById('streak-indicator');
         const count = document.getElementById('streak-count');
@@ -645,7 +672,7 @@ class QuizApp {
     nextQuestion() {
         this.currentQuestionIndex++;
 
-        if (this.currentQuestionIndex >= 10) {
+        if (this.currentQuestionIndex >= this.questionCount) {
             this.endQuiz();
         } else {
             this.displayQuestion();
@@ -663,7 +690,7 @@ class QuizApp {
         }
 
         // Calculate stats
-        const accuracy = Math.round((this.correctAnswers / 10) * 100);
+        const accuracy = Math.round((this.correctAnswers / this.questionCount) * 100);
         const avgTime = (this.questionTimes.reduce((a, b) => a + b, 0) / this.questionTimes.length).toFixed(1);
 
         // Determine result emoji and message
@@ -686,7 +713,7 @@ class QuizApp {
         document.getElementById('results-emoji').textContent = emoji;
         document.getElementById('results-title').textContent = message;
         document.getElementById('final-score').textContent = this.score;
-        document.getElementById('correct-count').textContent = `${this.correctAnswers}/10`;
+        document.getElementById('correct-count').textContent = `${this.correctAnswers}/${this.questionCount}`;
         document.getElementById('accuracy-percent').textContent = `${accuracy}%`;
         document.getElementById('best-streak').textContent = this.bestStreak;
         document.getElementById('avg-time').textContent = `${avgTime}s`;
