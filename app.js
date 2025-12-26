@@ -346,6 +346,14 @@ class QuizApp {
             });
         });
 
+        // Quick topic buttons
+        document.querySelectorAll('.quick-topic-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.sound.play('click');
+                this.startQuiz(btn.dataset.topic);
+            });
+        });
+
         // Results screen
         document.getElementById('play-again-btn').addEventListener('click', () => {
             this.sound.play('click');

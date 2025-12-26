@@ -340,6 +340,44 @@ body {
     background: var(--card-bg);
 }
 
+/* Quick Topics */
+.quick-topics {
+    margin-top: 5px;
+}
+
+.quick-topics h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.quick-topics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.quick-topic-btn {
+    padding: 12px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    color: var(--light);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    text-align: center;
+}
+
+.quick-topic-btn:active {
+    transform: scale(0.96);
+    background: rgba(102, 126, 234, 0.2);
+    border-color: var(--primary);
+}
+
 /* Topics Section */
 .topics-section {
     margin-top: 5px;
